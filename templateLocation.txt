@@ -1,0 +1,3 @@
+s3 location for stack template
+
+https://s3-us-gov-west-1.amazonaws.com/cf-templates-1kgzkxmam7ye-us-gov-west-1/20163490FR-mmowgliStack3yy5r2qacwsa2emimvj1dims4i

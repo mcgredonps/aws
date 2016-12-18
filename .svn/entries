@@ -1,0 +1,28 @@
+10
+
+dir
+0
+http://svn.xj3d.org/xj3d_code/branches/NPS/aws
+http://svn.xj3d.org/xj3d_code
+add
+
+
+
+
+
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+57ed0fdd-d3c4-45d6-8c23-3f8bf384fb47
+

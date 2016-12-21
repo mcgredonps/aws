@@ -1,4 +1,5 @@
- {"AWSTemplateFormatVersion" : "2010-09-09",
+{
+ "AWSTemplateFormatVersion" : "2010-09-09",
  "Description" : "AWS CloudFormation Sample Template for WordPress_Chef: WordPress is web software you can use to create a beautiful website or blog. This template installs a highly available, scalable WordPress deployment using a multi-AZ (Availability Zone) Amazon RDS database instance for storage. It demonstrates using the AWS CloudFormation bootstrap scripts to deploy the Chef client and using Chefclient in local mode to deploy WordPress. **WARNING** This template creates an Amazon EC2 instance, an Elastic Load Balancing load balancer, and an Amazon RDS database instance. You will be billed for the AWS resources used if you create a stack from this template.",
  "Parameters" : {
  "KeyName": {
@@ -66,7 +67,8 @@
  "AllowedPattern" : "[a-zA-Z0-9]*",
  "ConstraintDescription" : "Must contain only alphanumeric characters."
  },
-  "Default": "false",
+ "MultiAZDatabase": {
+ "Default": "false",
  "Description" : "Create a multi-AZ MySQL Amazon RDS database instance",
  "Type": "String",
  "AllowedValues" : [ "true", "false" ],
@@ -87,6 +89,7 @@
  "MinValue": "5",
  "MaxValue": "1024",
  "ConstraintDescription" : "Must be between 5 and 1024 GB."
+ }
  },
  "Mappings" : {
  "AWSInstanceType2Arch" : {
@@ -142,8 +145,8 @@
  }
  },
  "Resources" : {
-         
- "ElasticLoadBalancer" : {
+        
+"ElasticLoadBalancer" : {
  "Type" : "AWS::ElasticLoadBalancing::LoadBalancer",
  "Metadata" : {
  "Comment1" : "Configure the Load Balancer with a simple health check and cookie-based stickiness",
@@ -223,7 +226,7 @@
  "enabled" : "true",
 "ensureRunning" : "true",
  "files" : ["/etc/cfn/cfn-hup.conf", "/etc/cfn/hooks.d/cfn-auto-reloader.conf"]
-                              }
+                                    }
  }
  }
  },
@@ -302,7 +305,8 @@
  "/var/chef/chef-repo/cookbooks/wordpress/attributes/aws_rds_config.rb" : {
  "content": { "Fn::Join": [ "", [
  "normal['wordpress']['db']['pass'] = '", {"Ref" : "DBPassword"}, "'\n",
-"normal['wordpress']['db']['user'] = '", {"Ref" : "DBUsername"}, "'\n","normal['wordpress']['db']['host'] = '", {"Fn::GetAtt" : ["DBInstance", "Endpoint.Address"]}, "'\n",
+"normal['wordpress']['db']['user'] = '", {"Ref" : "DBUsername"}, "'\n",
+                                            "normal['wordpress']['db']['host'] = '", {"Fn::GetAtt" : ["DBInstance", "Endpoint.Address"]}, "'\n",
 "normal['wordpress']['db']['name'] = '", {"Ref" : "DBName"}, "'\n"
  ]]},
  "mode" : "000400",
@@ -378,7 +382,8 @@
  }
  },
  "DBInstance" : {
- "Type": "AWS::RDS::DBInstance","Properties": {
+ "Type": "AWS::RDS::DBInstance",
+            "Properties": {
  "DBName" : { "Ref" : "DBName" },
  "Engine" : "MySQL",
  "MultiAZ" : { "Ref": "MultiAZDatabase" },

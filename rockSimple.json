@@ -1,0 +1,41 @@
+{
+    "AWSTemplateFormatVersion" : "2010-09-09",
+    "Description" : "AWS CloudFormation rock simple",
+    "Parameters" : 
+    {
+        "KeyName": 
+        {
+           "Description" : "Name of an existing EC2 key pair to enable SSH access to the instances",
+           "Type": "String",
+           "Default" : "mmowgli_keypair",
+           "MinLength": "1",
+           "MaxLength": "255",
+           "AllowedPattern" : "[\\x20-\\x7E]*",
+           "ConstraintDescription" : "Can contain only ASCII characters."
+        }
+    },
+  "Resources" : {
+    "Ec2Instance" : {
+      "Type" : "AWS::EC2::Instance",
+      "Properties" : {
+        "SecurityGroups" : [ { "Ref" : "InstanceSecurityGroup" } ],
+        "KeyName" : "mmowgli_keypair",
+        "ImageId" : "ami-effb418e",
+        "InstanceType": "t2.medium"
+      }
+    },
+
+    "InstanceSecurityGroup" : {
+      "Type" : "AWS::EC2::SecurityGroup",
+      "Properties" : {
+        "GroupDescription" : "Enable SSH access via port 22",
+        "SecurityGroupIngress" : [ {
+          "IpProtocol" : "tcp",
+          "FromPort" : "22",
+          "ToPort" : "22",
+          "CidrIp" : "0.0.0.0/0"
+        } ]
+      }
+    }
+  }
+}

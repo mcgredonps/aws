@@ -1,0 +1,15 @@
+{
+   "java":
+   {
+        "tarball": "/vagrant/jdk-8u111-linux-x64.tar.gz",
+        "install_dir": "/usr/java"
+   },
+
+   "tomcat":
+   {
+       "tarball": "/vagrant/apache-tomcat-8.5.9.tar.gz",
+       "install_dir": "/usr/java"
+   },
+   
+   "run_list": [ "recipe[default]" ]
+}
